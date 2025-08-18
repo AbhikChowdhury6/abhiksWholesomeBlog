@@ -13,7 +13,7 @@ services:
     volumes:
       - ${DB_VOLUME:-db_data}:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -u${MYSQL_USER} -p${MYSQL_PASSWORD} --silent"]
+      test: ["CMD-SHELL", "mariadb-admin ping -u${MYSQL_USER} -p${MYSQL_PASSWORD} --silent"]
       interval: 10s
       timeout: 5s
       retries: 6
