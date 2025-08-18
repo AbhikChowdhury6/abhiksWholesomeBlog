@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  db:
+    image: mariadb:${MARIADB_VERSION:-11}
+    container_name: ${PROJECT_NAME:-wordpress}_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${DB_VOLUME:-db_data}:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -u${MYSQL_USER} -p${MYSQL_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  wordpress:
+    image: wordpress:${WORDPRESS_TAG:-latest}
+    container_name: ${PROJECT_NAME:-wordpress}_app
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX:-wp_}
+      WORDPRESS_DEBUG: ${WP_DEBUG:-0}
+      # Optional: add extra wp-config.php constants if you want
+      # WORDPRESS_CONFIG_EXTRA: |
+      #   define('WP_MEMORY_LIMIT', '128M');
+    volumes:
+      - ${WP_VOLUME:-wordpress_data}:/var/www/html
+    ports:
+      - "${HOST_HTTP_PORT:-8080}:80"
+
+volumes:
+  db_data:
+    name: ${DB_VOLUME:-db_data}
+  wordpress_data:
+    name: ${WP_VOLUME:-wordpress_data}
