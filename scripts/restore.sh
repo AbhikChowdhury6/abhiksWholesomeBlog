@@ -157,8 +157,8 @@ wait_for_db() {
 "${DC[@]}" down
 
 # Ensure volumes exist
-docker volume inspect "${WP_VOL}" >/dev/null 2>&1 || docker volume create "${WP_VOL}" >/dev_null
-docker volume inspect "${DB_VOL}" >/dev/null 2>&1 || docker volume create "${DB_VOL}" >/dev_null
+docker volume inspect "${WP_VOL}" >/dev/null 2>&1 || docker volume create "${WP_VOL}" >/dev/null
+docker volume inspect "${DB_VOL}" >/dev/null 2>&1 || docker volume create "${DB_VOL}" >/dev/null
 
 echo "==> Restoring WordPress files to volume '${WP_VOL}'"
 untar_into_volume "${WP_VOL}" "${WP_FILE}"
