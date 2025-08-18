@@ -21,3 +21,7 @@ backup command example
 
 restore command example
 ./scripts/restore.sh --wpfiles backup/wpfiles-20250817T010203Z.tar.gz --db backup/db_data-20250817T010203Z.tar.gz
+
+
+
+to point my domain at my ec2 instance
