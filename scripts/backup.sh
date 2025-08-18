@@ -10,7 +10,7 @@ set -a; [ -f .env ] && . ./.env; set +a
 
 echo "==> Dumping database to $OUTDIR/db-$STAMP.sql.gz"
 docker compose exec -T db sh -lc '
-  mysqldump -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+  mariadb-dump -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
   --single-transaction --quick --routines --events "$MYSQL_DATABASE"
 ' | gzip > "$OUTDIR/db-$STAMP.sql.gz"
 
