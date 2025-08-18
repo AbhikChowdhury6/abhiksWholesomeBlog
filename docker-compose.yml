@@ -38,6 +38,20 @@ services:
     ports:
       - "${HOST_HTTP_PORT:-8080}:80"
 
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      wordpress:
+        condition: service_started
+    ports:
+      - "80:80"       # HTTPS later on 443
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/certbot:/var/www/certbot
+      - ./letsencrypt:/etc/letsencrypt:ro
+
 volumes:
   db_data:
     name: ${DB_VOLUME:-db_data}

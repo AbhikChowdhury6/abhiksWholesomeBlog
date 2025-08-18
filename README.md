@@ -1,5 +1,10 @@
 # abhiksWholesomeBlog
 
+
+to get going install docker
+
+
+
 # a reminder of how to run
 docker compose up -d
 

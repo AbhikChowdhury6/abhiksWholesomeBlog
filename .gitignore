@@ -1,2 +1,12 @@
 .env
 /backup/*
+!backup/.gitkeep
+
+
+# Keep the dir but ignore its contents
+letsencrypt/*
+!letsencrypt/.gitkeep
+
+# Optional: if you don't want ACME challenge artifacts
+nginx/certbot/*
+!nginx/certbot/.gitkeep
