@@ -30,9 +30,12 @@ services:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX:-wp_}
       WORDPRESS_DEBUG: ${WP_DEBUG:-0}
-      # Optional: add extra wp-config.php constants if you want
-      # WORDPRESS_CONFIG_EXTRA: |
-      #   define('WP_MEMORY_LIMIT', '128M');
+      WORDPRESS_CONFIG_EXTRA: |
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+          $_SERVER['HTTPS'] = 'on';
+        }
+        define('FORCE_SSL_ADMIN', true);
+
     volumes:
       - ${WP_VOLUME:-wordpress_data}:/var/www/html
     #ports:
