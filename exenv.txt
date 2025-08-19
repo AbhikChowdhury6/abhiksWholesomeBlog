@@ -21,3 +21,8 @@ WP_VOLUME=wordpress_data
 
 # Host ports
 HOST_HTTP_PORT=8080
+
+# TLS / domains
+PRIMARY_DOMAIN=abhikchowdhury.com
+ALT_DOMAINS=www.abhikchowdhury.com        # space-separated if you add more (no quotes)
+CERTBOT_EMAIL=abhik.ch6@gmail.com

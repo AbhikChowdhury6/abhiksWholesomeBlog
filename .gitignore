@@ -10,3 +10,5 @@ letsencrypt/*
 # Optional: if you don't want ACME challenge artifacts
 nginx/certbot/*
 !nginx/certbot/.gitkeep
+
+nginx/conf.d/wp.conf

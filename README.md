@@ -7,6 +7,11 @@ to get going install docker
 
 # a reminder of how to run
 docker compose up -d
+docker compose down -v
+docker stop $(docker ps -q)
+docker container prune
+
+
 
 ## show fully resolved compose on system
 docker compose config
@@ -18,14 +23,17 @@ docker compose --env-file .env.staging up -d
 HOST_HTTP_PORT=9090 docker compose up -d
 
 
+docker inspect --format '{{json .State.Health}}' wpblog_db | jq
+docker logs containerName
 
+docker inspect containerName
 
 backup command example
 ./scripts/backup.sh
 
 
 restore command example
-./scripts/restore.sh --wpfiles backup/wpfiles-20250817T010203Z.tar.gz --db backup/db_data-20250817T010203Z.tar.gz
+./scripts/restore.sh backup/...
 
 
 
